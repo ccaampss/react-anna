@@ -1,18 +1,43 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
+import { formatDistance, subDays } from "date-fns";
+import TimeAgo from "timeago-react";
 
-const Message = () => {
-    return (
-        <div className='message owner'>
-            <div className="messageInfo">
-                <img src="https://media.istockphoto.com/id/1351849534/es/foto/mujer-de-cabello-gris-de-mediana-edad-sonriendo-feliz-de-pie-en-la-ciudad.jpg?s=612x612&w=0&k=20&c=YDDcNTAXaRZ_oWq2K84-mJoB08xJScSM0V9W4M1J4Dg="/>
-                <span>just now</span>
-            </div>
-            <div className="messageContent">
-                <p>guapo</p>
-                <img src="https://pbs.twimg.com/profile_images/1350817748562145283/bLEfiWPP_400x400.jpg"/>
-            </div>
-        </div>
-    )
-}
+const Message = ({ message }) => {
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
+  const date = new Date(message.date?.seconds).toLocaleString();
+
+  return (
+    <div
+      ref={ref}
+      className={`message ${message.senderId === currentUser.uid && "owner"}`}
+    >
+      <div className="messageInfo">
+        <img
+          src={
+            message.senderId === currentUser.uid
+              ? currentUser.photoURL
+              : data.user.photoURL
+          }
+          alt=""
+        />
+        <TimeAgo datetime={date} locale="en_US" />
+      </div>
+      <div className="messageContent">
+        <p>{message.text}</p>
+        {message.img && <img src={message.img} alt="" />}
+      </div>
+    </div>
+  );
+};
 
 export default Message;

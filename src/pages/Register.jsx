@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Add from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
+import { TbUserCircle } from "react-icons/tb";
 
 const Register = () => {
   const [err, setErr] = useState("");
@@ -35,7 +35,6 @@ const Register = () => {
               displayName,
               photoURL: downloadURL,
             });
-
             //create user on firestore
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
@@ -71,15 +70,14 @@ const Register = () => {
           <input required type="password" placeholder="password" />
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
-            <img src={Add} alt="" />
-            <span>Add an avatar</span>
+            <TbUserCircle /> <span>Add an avatar</span>
           </label>
           <button disabled={loading}>Sign up</button>
-          {loading && "..."}
+          {loading && "Uploading and compressing the image please wait..."}
           {err && <span>{err}</span>}
         </form>
         <p>
-          You do have an account? <Link to="/login">Login</Link>
+          You do have an account? <Link to="/register">Login</Link>
         </p>
       </div>
     </div>
