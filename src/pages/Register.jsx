@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { TbUserCircle } from "react-icons/tb";
 
@@ -20,7 +20,15 @@ const Register = () => {
     const file = e.target[3].files[0];
 
     try {
-      //Create user
+      //check if the user already exists
+      const thisUserExists = await getDoc(doc(db, "users", displayName));
+      if (thisUserExists.exists()) {
+        setErr("User already exists");
+        setLoading(false);
+        return;
+      }
+
+      //Create user with a unique displayName
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       //Create a unique image name
