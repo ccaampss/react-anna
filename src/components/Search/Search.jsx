@@ -10,8 +10,13 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
-import { AuthContext } from "../context/AuthContext";
+import { db } from "../../firebase";
+import { AuthContext } from "../../context/AuthContext";
+import { SearchStyled } from "./Search.styles";
+import Button from "../Button/Button";
+import { TbSearch } from "react-icons/tb";
+
+//
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
@@ -101,8 +106,8 @@ const Search = () => {
     }
   };
   return (
-    <div className="search">
-      <div className="searchForm">
+    <SearchStyled>
+      <section className="searchForm">
         <form
           action=""
           onSubmit={(e) => {
@@ -117,19 +122,24 @@ const Search = () => {
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           />
-          <button type="button">Search</button>
+          <Button>
+            <TbSearch />
+          </Button>
         </form>
-      </div>
-      {err && <span>User not found!</span>}
-      {user && (
-        <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
-          <div className="userChatInfo">
-            <span>{user.displayName}</span>
+      </section>
+
+      <section className="searchResult">
+        {err && <span>User not found!</span>}
+        {user && (
+          <div className="userChat" onClick={handleSelect}>
+            <img src={user.photoURL} alt="" />
+            <div className="userChatInfo">
+              <span>{user.displayName}</span>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </section>
+    </SearchStyled>
   );
 };
 

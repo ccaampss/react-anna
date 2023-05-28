@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from "@mui/material";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { signOut } from "firebase/auth";
@@ -37,7 +37,7 @@ const UserButton = () => {
 
       <UserButtonStyled onClick={handleClick}>
         <span>{currentUser.displayName}</span>
-        <img src={currentUser.photoURL} alt="Profile image" />
+        <Avatar src={currentUser.photoURL}>{currentUser.displayName[0]}</Avatar>
       </UserButtonStyled>
     </>
   );

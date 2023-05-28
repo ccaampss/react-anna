@@ -1,8 +1,9 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { ChatContext } from "../context/ChatContext";
-import { db } from "../firebase";
-import Message from "./Message";
+import { ChatContext } from "../../context/ChatContext";
+import { db } from "../../firebase";
+import Message from "../Message";
+import { MessagesStyled } from "./Messages.styles";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -19,11 +20,11 @@ const Messages = () => {
   }, [data.chatId]);
 
   return (
-    <div className="messages">
+    <MessagesStyled>
       {messages.map((m) => (
         <Message message={m} key={m.id} />
       ))}
-    </div>
+    </MessagesStyled>
   );
 };
 
