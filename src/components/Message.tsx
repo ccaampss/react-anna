@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import { formatDistance, subDays } from "date-fns";
-import TimeAgo from "timeago-react";
+import { Avatar } from "@mui/material";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  const ref = useRef();
+  const ref = useRef(null);
 
-  useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
-
-  const date = new Date(message.date?.seconds).toLocaleString();
+  const date = new Date(message.date?.seconds * 1000);
+  const time = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
 
   return (
     <div
@@ -22,15 +22,17 @@ const Message = ({ message }) => {
       className={`message ${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img
+        <Avatar
           src={
             message.senderId === currentUser.uid
               ? currentUser.photoURL
               : data.user.photoURL
           }
-          alt=""
-        />
-        <TimeAgo datetime={date} locale="en_US" />
+        >
+          {data.user.displayName[0]}
+        </Avatar>
+
+        <span className="messageTime">{time}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

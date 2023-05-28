@@ -27,27 +27,37 @@ const Chats = () => {
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
   };
+  const { data: openChatData } = useContext(ChatContext);
 
   return (
     <div className="chats">
       {chats &&
         Object.entries(chats)
           ?.sort((a, b) => b[1].date - a[1].date)
-          .map((chat) => (
-            <div
-              className="userChat"
-              key={chat[0]}
-              onClick={() => handleSelect(chat[1].userInfo)}
-            >
-              {chat[1].userInfo.photoURL && (
-                <img src={chat[1].userInfo.photoURL} alt="" />
-              )}
-              <div className="userChatInfo">
-                <span>{chat[1].userInfo.displayName}</span>
-                <p>{chat[1].lastMessage?.text}</p>
+          .map((chat) => {
+            return (
+              <div
+                className={`userChat ${
+                  chat[1].userInfo.uid === currentUser.uid && "thisChatIsYou"
+                } ${
+                  chat[1].userInfo.uid === openChatData.user.uid &&
+                  "youAreTalkiingWithThisChat"
+                }`}
+                key={chat[0]}
+                onClick={() => handleSelect(chat[1].userInfo)}
+              >
+                {chat[1].userInfo.photoURL && (
+                  <img src={chat[1].userInfo.photoURL} alt="" />
+                )}
+                <div className="userChatInfo">
+                  <span>{chat[1].userInfo.displayName}</span>
+                  <span className="lastMessage">
+                    {chat[1].lastMessage?.text}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
     </div>
   );
 };
