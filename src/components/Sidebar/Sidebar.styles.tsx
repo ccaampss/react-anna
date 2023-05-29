@@ -6,4 +6,5 @@ export const SidebarStyled = styled.div`
   position: relative;
   gap: 20px;
   max-width: 250px;
+  width: 100%;
 `;

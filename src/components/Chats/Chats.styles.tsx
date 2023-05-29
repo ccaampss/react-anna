@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ChatsStyled = styled.div`
-  background-color: #ffffff;
+  background-color: white;
   display: flex;
   flex-direction: column;
   gap: 10px;

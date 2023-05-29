@@ -12,8 +12,7 @@ export const SearchStyled = styled.div`
   form {
     display: flex;
     align-items: center;
-    border-radius: 5px;
-
+    border-radius: 10px;
     padding: 5px;
 
     input {
@@ -33,7 +32,7 @@ export const SearchStyled = styled.div`
     .userChat {
       display: flex;
       align-items: center;
-      border-radius: 5px;
+      border-radius: 10px;
       color: black;
       background-color: #ffffff;
       width: 100%;

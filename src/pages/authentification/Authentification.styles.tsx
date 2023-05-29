@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const AuthentificationStyles = styled.div`
-  background-color: #fff;
+  background-color: white;
   padding: 20px 60px;
   border-radius: 10px;
   display: flex;
@@ -12,14 +12,14 @@ const AuthentificationStyles = styled.div`
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
 
   .logo {
-    color: #a7bcff;
+    color: #d7b7aa;
     font-family: arial, "Poppins";
     font-weight: bold;
     font-size: 1.3em;
   }
 
   .title {
-    color: #a7bcff;
+    color: black;
     font-size: 1.3em;
     position: absolute;
     top: -24px;
@@ -40,7 +40,7 @@ const AuthentificationStyles = styled.div`
     padding: 15px;
     border: none;
     width: 250px;
-    border-bottom: 1px solid #a7bcff;
+    border-bottom: 1px solid #d7b7aa;
 
     &::placeholder {
       color: rgb(175, 175, 175);
@@ -48,7 +48,7 @@ const AuthentificationStyles = styled.div`
   }
 
   button {
-    background-color: #7b96ec;
+    background-color: #d7b7aa;
     color: white;
     padding: 10px;
     font-weight: bold;
@@ -61,7 +61,6 @@ const AuthentificationStyles = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #8da4f1;
     font-size: 12px;
     cursor: pointer;
 
@@ -71,7 +70,7 @@ const AuthentificationStyles = styled.div`
   }
 
   p {
-    color: #5d5b8d;
+    color: black;
     font-size: 12px;
     margin-top: 10px;
   }

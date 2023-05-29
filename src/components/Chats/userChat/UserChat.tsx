@@ -58,7 +58,7 @@ const UserChat = ({ chat }: any) => {
       <div className="info">
         <span>{chat[1].userInfo.displayName}</span>
         <span className="lastMessage">
-          {truncateText(chat[1].lastMessage?.text, 15)}
+          {truncateText(chat[1].lastMessage?.text || "", 15)}
         </span>
       </div>
     </UserChatStyled>

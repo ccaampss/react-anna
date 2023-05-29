@@ -6,11 +6,12 @@ import { Menu, MenuItem } from "@mui/material";
 import UserButton from "./components/UserButton";
 
 export const LayoutStyled = styled.div`
-  background-color: #a7bcff;
+  background-color: #d7b7aa;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: fit-content;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 

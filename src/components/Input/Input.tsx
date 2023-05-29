@@ -14,33 +14,45 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Button from "../Button/Button";
 import { LuImagePlus } from "react-icons/lu";
 import { InputStyled } from "./Input.styles";
+import { Snackbar } from "@mui/material";
 
 const Input = () => {
   const [text, setText] = useState("");
-  const [img, setImg] = useState(null);
+  const [img, setImg] = useState(null as any);
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  const [error, setError] = useState("");
+  const open = Boolean(error);
+  const handleClose = () => setError("");
 
   const handleSend = async () => {
+    if (!text && !img) {
+      setError("You must send something");
+      return;
+    }
     if (img) {
       const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
-      console.log(uploadTask);
-      uploadTask.on(() => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await updateDoc(doc(db, "chats", data.chatId), {
-            messages: arrayUnion({
-              id: uuid(),
-              text,
-              senderId: currentUser.uid,
-              date: Timestamp.now(),
-              img: downloadURL,
-            }),
+      uploadTask.on(
+        (error) => {
+          // Handle Error
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
           });
-        });
-      });
+        }
+      );
     } else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
@@ -71,28 +83,38 @@ const Input = () => {
   };
 
   return (
-    <InputStyled>
-      <input
-        type="text"
-        placeholder="Type something..."
-        onChange={(e) => setText(e.target.value)}
-        value={text}
+    <>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message={error}
       />
-      <div className="send">
+      <InputStyled>
         <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          name="file"
-          onChange={(e: any) => setImg(e.target.files[0])}
+          type="text"
+          required
+          placeholder="Type something..."
+          onChange={(e) => setText(e.target.value)}
+          value={text}
         />
+        <div className="send">
+          <input
+            type="file"
+            style={{ display: "none" }}
+            id="file"
+            name="file"
+            onChange={(e: any) => setImg(e.target.files[0])}
+          />
 
-        <label className="icon" htmlFor="file">
-          <LuImagePlus />
-        </label>
-        <Button onClick={handleSend}>Send </Button>
-      </div>
-    </InputStyled>
+          <label className="icon" htmlFor="file">
+            <LuImagePlus />
+            {img && <span>{img.name}</span>}
+          </label>
+          <Button onClick={handleSend}>Send </Button>
+        </div>
+      </InputStyled>
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ export const UserButtonStyled = styled.button`
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: #a7bcff;
+  background-color: #d7b7aa;
   border: none;
   :hover {
     cursor: pointer;

@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 import { Avatar } from "@mui/material";
+import { MessageStyled } from "./Message.styles";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
 
   const date = new Date(message.date?.seconds * 1000);
   const time = date.toLocaleTimeString("en-US", {
@@ -16,8 +17,12 @@ const Message = ({ message }) => {
     hour12: false,
   });
 
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
   return (
-    <div
+    <MessageStyled
       ref={ref}
       className={`message ${message.senderId === currentUser.uid && "owner"}`}
     >
@@ -38,7 +43,7 @@ const Message = ({ message }) => {
         <p>{message.text}</p>
         {message.img && <img src={message.img} alt="" />}
       </div>
-    </div>
+    </MessageStyled>
   );
 };
 
