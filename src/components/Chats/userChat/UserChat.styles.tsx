@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const UserChatStyled = styled.div`
+interface UserChatStyledProps {
+  isThisUserOpened: boolean;
+}
+export const UserChatStyled = styled.div<UserChatStyledProps>`
   display: flex;
   align-items: center;
   border-radius: 5px;
@@ -28,4 +31,9 @@ export const UserChatStyled = styled.div`
     cursor: pointer;
     filter: brightness(0.9);
   }
+  ${({ isThisUserOpened }) =>
+    isThisUserOpened &&
+    `
+    background-color: #ebebeb;
+  `}
 `;

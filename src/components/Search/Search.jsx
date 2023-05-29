@@ -16,7 +16,7 @@ import { SearchStyled } from "./Search.styles";
 import Button from "../Button/Button";
 import { TbSearch } from "react-icons/tb";
 
-//
+
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);

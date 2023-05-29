@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 import {
   arrayUnion,
   doc,
@@ -8,11 +8,12 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "../firebase";
+import { db, storage } from "../../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import Button from "./Button/Button";
+import Button from "../Button/Button";
 import { LuImagePlus } from "react-icons/lu";
+import { InputStyled } from "./Input.styles";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -26,24 +27,20 @@ const Input = () => {
       const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
-
-      uploadTask.on(
-        "state_changed",
-        (error) => {},
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
-                id: uuid(),
-                text,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
+      console.log(uploadTask);
+      uploadTask.on(() => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateDoc(doc(db, "chats", data.chatId), {
+            messages: arrayUnion({
+              id: uuid(),
+              text,
+              senderId: currentUser.uid,
+              date: Timestamp.now(),
+              img: downloadURL,
+            }),
           });
-        }
-      );
+        });
+      });
     } else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
@@ -74,7 +71,7 @@ const Input = () => {
   };
 
   return (
-    <div className="input">
+    <InputStyled>
       <input
         type="text"
         placeholder="Type something..."
@@ -86,14 +83,16 @@ const Input = () => {
           type="file"
           style={{ display: "none" }}
           id="file"
+          name="file"
           onChange={(e: any) => setImg(e.target.files[0])}
         />
-        <label htmlFor="file">
+
+        <label className="icon" htmlFor="file">
           <LuImagePlus />
         </label>
         <Button onClick={handleSend}>Send </Button>
       </div>
-    </div>
+    </InputStyled>
   );
 };
 

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Chat from "../components/Chat";
 import { HomeStyled } from "./Home.styles";
+import { ChatContext } from "../context/ChatContext";
 
 const Home = () => {
+  const { data: openChatData } = useContext(ChatContext);
   return (
     <HomeStyled>
       <Sidebar />
-      <Chat />
+      {openChatData.user.uid && <Chat />}
     </HomeStyled>
   );
 };
