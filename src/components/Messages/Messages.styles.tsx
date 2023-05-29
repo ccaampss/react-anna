@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const MessagesStyled = styled.div`
   background-color: #ffffff;
   padding: 10px;
-  height: calc(100% - 160px);
+  height: 100%;
   overflow-y: scroll;
-  border-radius: 10px;
 
   .message {
     display: flex;

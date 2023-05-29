@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { ChatContext } from "../../../../context/ChatContext";
-import { AuthContext } from "../../../../context/AuthContext";
+import { ChatContext } from "../../../context/ChatContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { UserChatStyled } from "./UserChat.styles";
 import { Avatar } from "@mui/material";
+import { truncateText } from "../../../utils";
 
 const UserChat = ({ chat }: any) => {
   const { data: openChatData } = useContext(ChatContext);
@@ -17,20 +18,18 @@ const UserChat = ({ chat }: any) => {
   const isThisChatYou = chat[1].userInfo.uid === currentUser.uid;
 
   const isThisUserOpened = chat[1].userInfo.uid === openChatData.user.uid;
-  
-  
+
   return (
     <UserChatStyled onClick={() => handleSelect(chat[1].userInfo)}>
-        
-        
-        
       <Avatar src={chat[1].userInfo.photoURL}>
         {currentUser.displayName[0]}
       </Avatar>
 
       <div className="info">
         <span>{chat[1].userInfo.displayName}</span>
-        <span className="lastMessage">{chat[1].lastMessage?.text}</span>
+        <span className="lastMessage">
+          {truncateText(chat[1].lastMessage?.text, 15)}
+        </span>
       </div>
     </UserChatStyled>
   );

@@ -107,38 +107,35 @@ const Search = () => {
   };
   return (
     <SearchStyled>
-      <section className="searchForm">
-        <form
-          action=""
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSearch();
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Find a user"
-            onKeyDown={handleKey}
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          />
-          <Button>
-            <TbSearch />
-          </Button>
-        </form>
-      </section>
+      <form
+        className="searchForm"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Find a user"
+          onKeyDown={handleKey}
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+        />
+        <Button>
+          <TbSearch />
+        </Button>
+      </form>
 
-      <section className="searchResult">
-        {err && <span>User not found!</span>}
-        {user && (
+      {user && (
+        <section className="searchResults">
           <div className="userChat" onClick={handleSelect}>
             <img src={user.photoURL} alt="" />
             <div className="userChatInfo">
               <span>{user.displayName}</span>
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </SearchStyled>
   );
 };

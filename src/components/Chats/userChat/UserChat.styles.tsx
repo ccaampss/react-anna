@@ -6,7 +6,7 @@ export const UserChatStyled = styled.div`
   border-radius: 5px;
   color: black;
   gap: 10px;
-
+  background-color: #ffffff;
   padding: 10px;
   img {
     width: 50px;
@@ -23,5 +23,9 @@ export const UserChatStyled = styled.div`
       font-size: 0.8em;
       opacity: 0.7;
     }
+  }
+  :hover {
+    cursor: pointer;
+    filter: brightness(0.9);
   }
 `;

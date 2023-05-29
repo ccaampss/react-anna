@@ -5,4 +5,5 @@ export const SidebarStyled = styled.div`
   flex-direction: column;
   position: relative;
   gap: 20px;
+  max-width: 250px;
 `;

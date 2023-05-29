@@ -13,18 +13,6 @@ html {
   font-size: 18px;
 }
 
-.chat {
-  flex: 2;
-
-  .chatIcons {
-    display: flex;
-    gap: 10px;
-  }
-  img {
-    height: 24px;
-    cursor: pointer;
-  }
-}
 
 // lo de enviar mensaje. esto sí se queda
 .input {

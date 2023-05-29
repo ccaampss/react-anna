@@ -4,6 +4,7 @@ import { ChatContext } from "../../context/ChatContext";
 import { db } from "../../firebase";
 import Message from "../Message";
 import { MessagesStyled } from "./Messages.styles";
+import { IMessage } from "../../types";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -21,7 +22,7 @@ const Messages = () => {
 
   return (
     <MessagesStyled>
-      {messages.map((m) => (
+      {messages.map((m: IMessage) => (
         <Message message={m} key={m.id} />
       ))}
     </MessagesStyled>

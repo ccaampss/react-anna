@@ -11,6 +11,8 @@ import {
 import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import Button from "./Button/Button";
+import { LuImagePlus } from "react-icons/lu";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -26,9 +28,8 @@ const Input = () => {
       const uploadTask = uploadBytesResumable(storageRef, img);
 
       uploadTask.on(
-        (error) => {
-          //TODO:Handle Error
-        },
+        "state_changed",
+        (error) => {},
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
@@ -71,6 +72,7 @@ const Input = () => {
     setText("");
     setImg(null);
   };
+
   return (
     <div className="input">
       <input
@@ -80,17 +82,16 @@ const Input = () => {
         value={text}
       />
       <div className="send">
-        <p>Attach</p>
         <input
           type="file"
           style={{ display: "none" }}
           id="file"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={(e: any) => setImg(e.target.files[0])}
         />
         <label htmlFor="file">
-          <p>img</p>
+          <LuImagePlus />
         </label>
-        <button onClick={handleSend}>Send</button>
+        <Button onClick={handleSend}>Send </Button>
       </div>
     </div>
   );

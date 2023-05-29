@@ -15,12 +15,12 @@ const AuthentificationStyles = styled.div`
     color: #a7bcff;
     font-family: arial, "Poppins";
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1.3em;
   }
 
   .title {
     color: #a7bcff;
-    font-size: 25px;
+    font-size: 1.3em;
     position: absolute;
     top: -24px;
     background-color: #fff;
