@@ -14,8 +14,10 @@ export const LayoutStyled = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: 40px;
 
   .content {
+    margin: 40px;
     width: 100%;
     height: 100%;
     display: flex;
