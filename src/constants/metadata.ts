@@ -1,1 +1,1 @@
-export const projectName = "React Anna";
+export const projectName = "React Anna"; // Project name

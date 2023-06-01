@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from "react"; // useState is a hook that allows us to use state in a functional component
 import {
   collection,
   query,
@@ -9,51 +9,51 @@ import {
   updateDoc,
   serverTimestamp,
   getDoc,
-} from "firebase/firestore";
-import { db } from "../../firebase";
-import { AuthContext } from "../../context/AuthContext";
-import { SearchStyled } from "./Search.styles";
-import Button from "../Button/Button";
-import { TbSearch } from "react-icons/tb";
+} from "firebase/firestore"; // import the firestore database
+import { db } from "../../firebase"; // import the firebase database
+import { AuthContext } from "../../context/AuthContext"; // import the AuthContext
+import { SearchStyled } from "./Search.styles"; // import the SearchStyled component
+import Button from "../Button/Button"; // import the Button component
+import { TbSearch } from "react-icons/tb"; // import the TbSearch icon
 
 
-const Search = () => {
-  const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
-  const [err, setErr] = useState(false);
+const Search = () => { // create a Search component
+  const [username, setUsername] = useState(""); // create a username state
+  const [user, setUser] = useState(null); // create a user state
+  const [err, setErr] = useState(false); // create a err state
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext); // get the currentUser from the AuthContext
 
-  const handleSearch = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("displayName", "==", username)
+  const handleSearch = async () => { // create a handleSearch function
+    const q = query( // create a query
+      collection(db, "users"), // get the users collection
+      where("displayName", "==", username) // where the displayName is equal to the username
     );
 
     try {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+      const querySnapshot = await getDocs(q); // get the querySnapshot
+      querySnapshot.forEach((doc) => { // loop through the querySnapshot
+        setUser(doc.data()); // set the user state to the doc.data()
       });
-    } catch (err) {
-      setErr(true);
+    } catch (err) { // catch any errors
+      setErr(true); // set the err state to true
     }
   };
 
-  const handleKey = (e) => {
-    e.code === "Enter" && handleSearch();
+  const handleKey = (e) => { // create a handleKey function
+    e.code === "Enter" && handleSearch(); // if the key pressed is the enter key, run the handleSearch function
   };
 
-  const handleSelect = async () => {
+  const handleSelect = async () => { // create a handleSelect function
     //check whether the group(chats in firestore) exists, if not create
-    if (!currentUser) return;
-    if (!user) return;
+    if (!currentUser) return; // if there is no currentUser, return
+    if (!user) return; // if there is no user, return
 
-    const combinedId =
-      currentUser.uid > user.uid
+    const combinedId = 
+      currentUser.uid > user.uid 
         ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
-    try {
+        : user.uid + currentUser.uid; // create a combinedId
+    try { // try to run the following code
       const res = await getDoc(doc(db, "chats", combinedId));
 
       if (!res.exists()) {
@@ -98,23 +98,23 @@ const Search = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err) {
-      console.log(err.message);
-    } finally {
-      setUser(null);
-      setUsername("");
+    } catch (err) { // catch any errors
+      console.log(err.message); // log the error message
+    } finally { // finally
+      setUser(null); // set the user state to null
+      setUsername(""); // set the username state to an empty string
     }
   };
-  return (
-    <SearchStyled>
-      <form
+  return ( // return the following
+    <SearchStyled> 
+      <form // create a form
         className="searchForm"
         onSubmit={(e) => {
           e.preventDefault();
           handleSearch();
         }}
       >
-        <input
+        <input // create an input
           type="text"
           placeholder="Find a user"
           onKeyDown={handleKey}
@@ -126,8 +126,8 @@ const Search = () => {
         </Button>
       </form>
 
-      {user && (
-        <section className="searchResults">
+      {user && ( // if there is a user, return the following
+        <section className="searchResults"> 
           <div className="userChat" onClick={handleSelect}>
             <img src={user.photoURL} alt="" />
             <div className="userChatInfo">
@@ -140,4 +140,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default Search; // export the Search component

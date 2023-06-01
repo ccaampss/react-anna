@@ -1,6 +1,6 @@
-export function truncateText(text: string, length: number = 40): string {
-  if (text.length > length) {
-    return text.slice(0, length) + "...";
+export function truncateText(text: string, length: number = 40): string { // Truncate text
+  if (text.length > length) { // If text length is greater than length
+    return text.slice(0, length) + "..."; // Return text slice
   }
-  return text;
+  return text; // Return text
 }

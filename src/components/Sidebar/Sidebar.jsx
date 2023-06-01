@@ -1,20 +1,20 @@
-import React from "react";
-import Search from "../Search/Search";
-import Chats from "../Chats/Chats";
-import { SidebarStyled } from "./Sidebar.styles";
+import React from "react"; // import react
+import Search from "../Search/Search"; // import the Search component
+import Chats from "../Chats/Chats"; // import the Chats component
+import { SidebarStyled } from "./Sidebar.styles"; // import the SidebarStyled component
 
-const Sidebar = () => {
-  return (
-    <SidebarStyled>
+const Sidebar = () => { // create a Sidebar component
+  return ( // return the following
+    <SidebarStyled> 
       <div className="search">
-        <Search />
-      </div>
+        <Search /> 
+      </div> 
 
       <div className="chats">
         <Chats />
       </div>
-    </SidebarStyled>
+    </SidebarStyled> // return the SidebarStyled component
   );
 };
 
-export default Sidebar;
+export default Sidebar; // export the Sidebar component
