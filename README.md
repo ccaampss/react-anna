@@ -15,11 +15,4 @@ This is a simple chat webpage that allows users to send messages to each other. 
 1. Run `npm run build` to build the project
 2. Run `firebase deploy` to deploy the project
 
-## How to use the webpage
-
-1. Open the webpage
-2. Enter a username
-3. Click on the button to join the room
-4. Send messages to other users in the room
-
 Check out the webpage here: https://annacamps.es/ and my github here: @ccaampss
